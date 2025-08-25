@@ -552,26 +552,23 @@ export default function HomePage() {
     <div className={styles.container}>
       <h1 className={styles.title}>在线贝叶斯优化</h1>
 
+      {error && <p className={styles.error}>{error}</p>}
+
       {savedConfig && phase === 'setup' && (
-        <div className={styles.recoveryBanner}>
-          <p>检测到未完成的优化会话，包含 {history.length} 个历史试验。</p>
-          <button className={styles.button} onClick={resumeOptimization}>
-            恢复优化
-          </button>
-          <button className={styles.secondaryButton} onClick={clearStorage}>
-            开始新的优化
-          </button>
+        <div className={styles.resumeSection}>
+          <h2>继续上次优化？</h2>
+          <p>检测到未完成的优化任务（{history.length} 次试验）</p>
+          <button className={styles.button} onClick={resumeOptimization}>继续优化</button>
+          <button className={styles.secondaryButton} onClick={clearStorage}>清除并重新开始</button>
         </div>
       )}
 
       {phase === 'setup' && (
         <section className={styles.section}>
-          <h2>优化参数设置</h2>
-          <p>请在下面定义您的优化参数。为每个参数提供名称、数据类型和范围或类别。</p>
-
+          <h2>参数设置</h2>
+          <p>定义您的优化参数和初始条件。</p>
           {parameters.map((param, index) => (
-            <div key={index} className={styles.parameterInputGroup}>
-              <h3>参数 {index + 1}</h3>
+            <div key={index} className={styles.paramConfig}>
               <div className={styles.inputGroup}>
                 <label htmlFor={`parameterName-${index}`}>参数名称:</label>
                 <input
@@ -593,7 +590,7 @@ export default function HomePage() {
                   value={param.type}
                   onChange={(e) => {
                     const newParameters = [...parameters];
-                    newParameters[index].type = e.target.value as any;
+                    newParameters[index].type = e.target.value as 'continuous' | 'categorical' | 'integer';
                     setParameters(newParameters);
                   }}
                 >
@@ -852,6 +849,3 @@ export default function HomePage() {
     </div>
   );
 }
-  // 剩余的JSX代码保持不变，与之前相同
-  // [这里应该包含完整的JSX代码，但由于长度限制，我假设您已经有这部分代码]
-  // 如果您需要完整的JSX部分，请告诉我，我可以继续提供
