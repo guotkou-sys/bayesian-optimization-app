@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "next build": "next build --turbopack",
+    "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "next lint"
   },
   "dependencies": {
     "hyperparameters": "^0.25.6",
